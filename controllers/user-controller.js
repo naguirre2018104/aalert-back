@@ -309,6 +309,25 @@ function getUserbyID(req, res) {
     });
 }
 
+function getUserByToken(req, res){
+    let userId = req.user.sub || false;
+
+    if(!userId){
+        return res.json({ok: false, message: "Error, no ID"})
+    }else {
+        User.findById(userId).populate().exec((err, user) => {
+            if(err){
+                return res.status(500).send({ok: false, message: "Error el buscar usuario"});
+            }else if(user){
+                return res.json({ok: true, message: "Usuario valido", user});
+            }else {
+                return res.json({ok: false, message: "Usuario No valido"});
+            }
+        });
+    }
+
+}
+
 module.exports = {
     userAdmin,
     register,
@@ -317,4 +336,5 @@ module.exports = {
     deleteUser,
     getAllUsers,
     getUserbyID,
+    getUserByToken
 };

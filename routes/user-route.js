@@ -15,6 +15,7 @@ api.put("/deleteUser/:id", mdAuth.ensureUser, userController.deleteUser);
 api.get("/getAllUsers", [mdAuth.ensureUser, mdAuth.ensureAdmin],userController.getAllUsers);
 
 api.get("/getUserbyID", [mdAuth.ensureUser], userController.getUserbyID);
+api.get("/getUserByToken", [mdAuth.ensureUser], userController.getUserByToken)
 
 
 module.exports = api;

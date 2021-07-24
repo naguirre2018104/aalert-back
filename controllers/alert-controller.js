@@ -34,38 +34,6 @@ function createAlert(req, res) {
             if (err) {
                 return res.status(500).send({ message: "Error al guardar alerta" });
             } else if (alertSaved) {
-                // Alert.findOneAndUpdate({ _id: alertSaved._id }, { $push: { user: req.user.sub } }, { new: true },
-                //     (err, alertUpdateUser) => {
-                //         if (err) {
-                //             return res
-                //                 .status(500)
-                //                 .send({ message: "Error al actualizar la alerta" });
-                //         } else if (alertUpdateUser) {
-                //             Alert.findOneAndUpdate({ _id: alertSaved._id }, { $push: { departament: departamentId } }, { new: true },
-                //                 (err, alertUpdateDepartament) => {
-                //                     if (err) {
-                //                         return res
-                //                             .status(500)
-                //                             .send({ message: "Error al actualizar la alerta" });
-                //                     } else if (alertUpdateDepartament) {
-                //                         return res.send({
-                //                             message: "Alerta creada con exito",
-                //                             alertSaved,
-                //                         });
-                //                     } else {
-                //                         return res
-                //                             .status(500)
-                //                             .send({ message: "No se pudo guardar la alerta" });
-                //                     }
-                //                 }
-                //             );
-                //         } else {
-                //             return res
-                //                 .status(500)
-                //                 .send({ message: "No se pudo guardar la alerta" });
-                //         }
-                //     }
-                // );
                 return res.json({
                     ok: true,
                     message: "Alerta creada exitosamente",
