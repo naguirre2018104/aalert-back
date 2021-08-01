@@ -7,7 +7,6 @@ const moment = require("moment");
 
 function createAlert(req, res) {
     var alert = new Alert();
-    var departamentId = req.params.idD;
     var params = req.body;
     let userId = req.user.sub;
 
@@ -16,8 +15,7 @@ function createAlert(req, res) {
             params.lastname,
             params.lastdate,
             params.place,
-            userId,
-            departamentId)
+            userId)
     ) {
         alert.date = moment().format();
         alert.status = params.status;
@@ -28,8 +26,9 @@ function createAlert(req, res) {
         alert.lastdate = params.lastdate;
         alert.sex = params.sex;
         alert.user = userId;
-        alert.departament = departamentId;
         alert.description = params.description;
+        alert.showAlert = params.showAlert;
+
         alert.save((err, alertSaved) => {
             if (err) {
                 return res.status(500).send({ message: "Error al guardar alerta" });
@@ -167,26 +166,18 @@ function updateAlert(req, res) {
 function deleteAlert(req, res) {
     let alertId = req.params.id;
 
-    Alert.findOne({ _id: alertId }, (err, alertFinded) => {
+    Alert.findByIdAndRemove(alertId, (err, alertRemoved) => {
         if (err) {
-            return res.status(500).send({ message: "Error al buscar una alerta" });
-        } else if (alertFinded) {
-            Alert.findByIdAndRemove(alertId, (err, alertRemoved) => {
-                if (err) {
-                    return res
-                        .status(500)
-                        .send({ message: "Error al intentar eliminar la alerta" });
-                } else if (alertRemoved) {
-                    return res.send({
-                        message: "Alerta eliminada correctamente",
-                        alertRemoved,
-                    });
-                } else {
-                    return res.status(403).send({ message: "No se elimino" });
-                }
+            return res
+            .status(500)
+            .send({ message: "Error al intentar eliminar la alerta" });
+        } else if (alertRemoved) {
+                return res.send({
+                message: "Alerta eliminada correctamente",
+                alertRemoved,
             });
         } else {
-            return res.status(403).send({ message: "Alerta inexistente" });
+            return res.status(403).send({ message: "No se elimino" });
         }
     });
 }
@@ -231,6 +222,23 @@ function getUserAlerts(req,res){
     })
 }
 
+async function updateCanShowAlert(req, res){
+    let alertId = req.params.idA;
+    let update = req.body;
+
+    if(update.showAlert != null){
+        try {
+            let updated = await Alert.findByIdAndUpdate(alertId, update, {new: true});
+            return res.json({ok: true, message: "Actualizado Correctamente", updated});
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send({ok: false, message: "Un error ha ocurrido", error})
+        }
+    }else {
+        return res.status(400).send({ok: false, message: "Ingrese todos lo datos"});
+    }
+}
+
 module.exports = {
     createAlert,
     updateAlert,
@@ -239,5 +247,6 @@ module.exports = {
     getAlertByID,
     uploadImage,
     getImage,
-    getUserAlerts
+    getUserAlerts,
+    updateCanShowAlert
 };

@@ -14,7 +14,7 @@ function userAdmin() {
         } else if (adminFinded) {
             console.log("Usuario admin creado con anterioridad");
         } else {
-            bcrypt.hash(123, null, null, (err, passwordHashed) => {
+            bcrypt.hash("kinal2021", null, null, (err, passwordHashed) => {
                 if (err) {
                     console.log("Error al encriptar contraseña de admin");
                 } else if (passwordHashed) {

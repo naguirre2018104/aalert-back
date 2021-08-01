@@ -9,7 +9,7 @@ var alertSchema = Schema({
   name: String,
   lastname: String,
   age: Number,
-  place: String,
+  place: Object,
   lastdate: Date,
   sex: String,
   image: String,
@@ -21,6 +21,7 @@ var alertSchema = Schema({
     hair: String,
     special_signs: String,
   },
+  showAlert: {type: Boolean, default: true}
 });
 
 module.exports = mongoose.model("alert", alertSchema);

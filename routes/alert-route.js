@@ -8,7 +8,7 @@ const upload = connectMultiparty({ uploadDir: "./uploads/alerts" });
 
 var api = express.Router();
 
-api.post("/createAlert/:idD", [mdAuth.ensureUser], alertController.createAlert);
+api.post("/createAlert", [mdAuth.ensureUser], alertController.createAlert);
 api.put("/updateAlert/:id", [mdAuth.ensureUser], alertController.updateAlert);
 api.delete(
     "/deleteAlert/:id", [mdAuth.ensureUser],
@@ -22,5 +22,6 @@ api.put(
 );
 api.get("/getImage/:fileName", [upload], alertController.getImage);
 api.get("/getUserAlerts",[mdAuth.ensureUser], alertController.getUserAlerts);
+api.put("/updateCanShowAlert/:idA", [mdAuth.ensureUser], alertController.updateCanShowAlert)
 
 module.exports = api;
