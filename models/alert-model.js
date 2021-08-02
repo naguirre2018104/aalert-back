@@ -21,7 +21,8 @@ var alertSchema = Schema({
     hair: String,
     special_signs: String,
   },
-  showAlert: {type: Boolean, default: true}
+  showAlert: {type: Boolean, default: true},
+  agree: {type: Boolean, default: true}
 });
 
 module.exports = mongoose.model("alert", alertSchema);

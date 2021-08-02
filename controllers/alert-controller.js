@@ -28,6 +28,7 @@ function createAlert(req, res) {
         alert.user = userId;
         alert.description = params.description;
         alert.showAlert = params.showAlert;
+        alert.image = params.image;
 
         alert.save((err, alertSaved) => {
             if (err) {
